@@ -21,11 +21,10 @@
 # SOFTWARE.
 
 
-from huggingface_hub import hf_hub_download
-from langchain.document_loaders import WebBaseLoader
+from langchain_community.document_loaders import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import Chroma
-from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain_community.embeddings import HuggingFaceEmbeddings
 
 
 DEFAULT_EMBEDDING = "sentence-transformers/distiluse-base-multilingual-cased-v2"

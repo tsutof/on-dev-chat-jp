@@ -36,7 +36,7 @@ TEMPLATE = """<s>[INST] <<SYS>>
 
 
 def make_chain(retriever, llm):
-    prompt = ChatPromptTemplate.from_template(template)
+    prompt = ChatPromptTemplate.from_template(TEMPLATE)
     output_parser = StrOutputParser()
     setup_and_retrieval = RunnableParallel(
         {"context": retriever, "question": RunnablePassthrough()}

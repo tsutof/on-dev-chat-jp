@@ -24,10 +24,10 @@
 import gradio as gr
 import pandas as pd
 import json
-import vector_store
+from ondevchatjp.vector_store import *
 
 
-vector_db = vector_store.VectorStore()
+vector_db = VectorStore()
 
 
 # 指定したURLからベクトルデータを作成する
