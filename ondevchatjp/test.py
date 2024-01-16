@@ -12,7 +12,7 @@ def main():
     db = VectorStore()
     db.add_web_document(URL)
     retriever = db.as_retriever(search_k=3)
-    llm = get_model()
+    llm = get_model(seed=0)
     chain = make_chain(retriever, llm)
     for s in chain.stream(QUESTION):
         print(s, end="", flush=True)
