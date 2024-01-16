@@ -1,7 +1,4 @@
-from chain import *
-from model import *
-from transcriber import *
-from vector_store import *
+from ondevchatjp import *
 
 
 URL = "https://www.aozora.gr.jp/cards/000081/files/43754_17659.html"
@@ -13,7 +10,7 @@ def main():
     db.add_web_document(URL)
     retriever = db.as_retriever(search_k=3)
     llm = get_model(seed=0)
-    chain = make_chain(retriever, llm)
+    chain = make_rag_chain(retriever, llm)
     for s in chain.stream(QUESTION):
         print(s, end="", flush=True)
 

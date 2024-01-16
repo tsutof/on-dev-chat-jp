@@ -26,7 +26,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableParallel, RunnablePassthrough
 
 
-TEMPLATE = """<s>[INST] <<SYS>>
+RAG_TEMPLATE = """<s>[INST] <<SYS>>
 あなたは誠実で優秀な日本人のアシスタントです。前提条件の情報だけで回答してください。
 <</SYS>>
 
@@ -35,8 +35,8 @@ TEMPLATE = """<s>[INST] <<SYS>>
 質問：{question} [/INST]"""
 
 
-def make_chain(retriever, llm):
-    prompt = ChatPromptTemplate.from_template(TEMPLATE)
+def make_rag_chain(retriever, llm):
+    prompt = ChatPromptTemplate.from_template(RAG_TEMPLATE)
     output_parser = StrOutputParser()
     setup_and_retrieval = RunnableParallel(
         {"context": retriever, "question": RunnablePassthrough()}
