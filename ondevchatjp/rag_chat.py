@@ -28,10 +28,9 @@ from ondevchatjp import *
 
 with gr.Blocks() as demo:
     db = VectorStore()
-    num_docs = db.get_num_docs()
-    retriever = db.as_retriever(search_k=3)
+    retriever = db.as_retriever(search_k=2)
     transcriber = Transcriber()
-    llm = get_model(seed=0)
+    llm = get_model(seed=-1)
     chain = make_rag_chain(retriever, llm)
 
     def add_documnet(url):
@@ -77,10 +76,10 @@ with gr.Blocks() as demo:
     with gr.Row():
         url = gr.Textbox(value="", label="情報ソースURL", scale=5)
         rst_btn = gr.Button(value="ベクトル情報をリセット")
-    flg = True if num_docs > 0 else False
-    msg = gr.Textbox("", label="あなたからのメッセージ", interactive=flg)
-    audio_in = gr.Audio(sources=["microphone"], label="あなたからのメッセージ")
-    audio_out = gr.Audio(type="numpy", label="AIからのメッセージ", autoplay=True)
+    flg = True if db.get_num_docs() > 0 else False
+    msg = gr.Textbox("", label="あなたからのテキストメッセージ", interactive=flg)
+    audio_in = gr.Audio(sources=["microphone"], label="あなたからの音声メッセージ")
+    audio_out = gr.Audio(type="numpy", label="AIからの音声メッセージ", autoplay=True)
 
     # テキスト入力時のイベントハンドリング
     msg.submit(
