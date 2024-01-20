@@ -34,6 +34,12 @@ RAG_TEMPLATE = """<s>[INST] <<SYS>>
 
 質問：{question} [/INST]"""
 
+FREE_TALK_TEMPLATE = """<s>[INST] <<SYS>>
+あなたは誠実で優秀な日本人のアシスタントです。前提条件の情報だけで回答してください。
+<</SYS>>
+
+{quote} {question} [/INST]"""
+
 
 def make_rag_chain(retriever, llm):
     prompt = ChatPromptTemplate.from_template(RAG_TEMPLATE)
@@ -42,4 +48,11 @@ def make_rag_chain(retriever, llm):
         {"context": retriever, "question": RunnablePassthrough()}
     )
     chain = setup_and_retrieval | prompt | llm | output_parser
+    return chain
+
+
+def make_free_talk_chain(llm):
+    prompt = ChatPromptTemplate.from_template(FREE_TALK_TEMPLATE)
+    output_parser = StrOutputParser()
+    chain = prompt | llm | output_parser
     return chain

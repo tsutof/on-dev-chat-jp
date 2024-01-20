@@ -27,7 +27,8 @@ from langchain_community.llms import LlamaCpp
 
 DEFAULT_CONTEXT_SIZE = 2048
 DEFAULT_LLM_REPO_ID = "mmnga/ELYZA-japanese-Llama-2-7b-instruct-gguf"
-DEFAULT_LLM_FILE = "ELYZA-japanese-Llama-2-7b-instruct-q8_0.gguf"
+# DEFAULT_LLM_FILE = "ELYZA-japanese-Llama-2-7b-instruct-q8_0.gguf"
+DEFAULT_LLM_FILE = "ELYZA-japanese-Llama-2-7b-instruct-q4_K_S.gguf"
 
 
 def get_model(
