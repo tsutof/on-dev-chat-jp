@@ -71,12 +71,6 @@ with gr.Blocks() as demo:
     with gr.Row():
         url = gr.Textbox(value="", label="情報ソースURL", scale=5)
         vect_btn = gr.Button(value="ベクトル化")
-    examples = [
-        "https://zenn.dev/guideline",
-        "https://ja.wikipedia.org/wiki/コンピュータ",
-        "https://www.aozora.gr.jp/cards/000081/files/43754_17659.html"
-    ]
-    gr.Examples(examples, url, label="情報ソースURLの例")
     with gr.Row():
         flg = True if ndocs > 0 else False
         query = gr.Textbox(value="", label="質問", interactive=flg, scale=5)
@@ -114,4 +108,4 @@ with gr.Blocks() as demo:
     rst_btn.click(fn=reset_db, inputs=None, outputs=[query, query_btn])
 
 
-demo.queue().launch()
+demo.queue().launch(inbrowser=True)
