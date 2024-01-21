@@ -21,16 +21,24 @@
 # SOFTWARE.
 
 
+import argparse
+import json
 import gradio as gr
 import pyopenjtalk
 from ondevchatjp import *
+
+
+model_kwargs = vars(
+    argparse.ArgumentParser(parents=[get_model_arg_paser()]).parse_args()
+)
+print(json.dumps(model_kwargs, ensure_ascii=False))
 
 
 with gr.Blocks() as demo:
     db = VectorStore()
     retriever = db.as_retriever(search_k=2)
     transcriber = Transcriber()
-    llm = get_model(seed=-1)
+    llm = get_model(**model_kwargs)
     chain = make_rag_chain(retriever, llm)
 
     def add_documnet(url):

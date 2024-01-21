@@ -37,7 +37,7 @@ class OnDevChatJpRagTest(unittest.TestCase):
         db = VectorStore()
         db.add_web_document(URL)
         retriever = db.as_retriever(search_k=3)
-        llm = get_model(repo_id=LLM_REPO_ID, file=LLM_FILE, seed=0)
+        llm = get_model(repo_id=LLM_REPO_ID, gguf_file=LLM_FILE, seed=0)
         chain = make_rag_chain(retriever, llm)
         answer = ""
         for s in chain.stream(QUESTION):

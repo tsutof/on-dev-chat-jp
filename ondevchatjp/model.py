@@ -21,28 +21,64 @@
 # SOFTWARE.
 
 
+import argparse
 from huggingface_hub import hf_hub_download
 from langchain_community.llms import LlamaCpp
 
 
 DEFAULT_CONTEXT_SIZE = 2048
+DEFAULT_TEMPERATURE = 0.8
 DEFAULT_LLM_REPO_ID = "mmnga/ELYZA-japanese-Llama-2-7b-instruct-gguf"
-# DEFAULT_LLM_FILE = "ELYZA-japanese-Llama-2-7b-instruct-q8_0.gguf"
 DEFAULT_LLM_FILE = "ELYZA-japanese-Llama-2-7b-instruct-q4_K_S.gguf"
 
 
 def get_model(
         repo_id: str=DEFAULT_LLM_REPO_ID, 
-        file: str=DEFAULT_LLM_FILE,
+        gguf_file: str=DEFAULT_LLM_FILE,
         cntx_size: int=DEFAULT_CONTEXT_SIZE,
+        temperature: float=DEFAULT_TEMPERATURE,
         seed: int=-1):
-    model_path = hf_hub_download(repo_id=repo_id, filename=file)
+    model_path = hf_hub_download(repo_id=repo_id, filename=gguf_file)
     llm = LlamaCpp(
         model_path=model_path, 
         n_gpu_layers=128, 
         n_ctx=cntx_size,
         f16_kv=True,
         verbose=True,
-        seed=seed
+        seed=seed,
+        temperature=temperature
     )
     return llm
+
+
+def get_model_arg_paser():
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("--repo_id", "-r",
+        type=str, default=DEFAULT_LLM_REPO_ID, metavar="LLM_REPO",
+        help=f"Hugging Face Hub Repository ID (Default: {DEFAULT_LLM_REPO_ID})"
+    )
+    parser.add_argument("--gguf_file", "-f",
+        type=str, default=DEFAULT_LLM_FILE, metavar="LLM_FILE",
+        help=f"GGUF File Name (Default: {DEFAULT_LLM_FILE})"
+    )
+    parser.add_argument("--cntx_size", "-c",
+        type=int, default=DEFAULT_CONTEXT_SIZE, metavar="CNTX_SIZE",
+        help=f"Context Size (Default: {DEFAULT_CONTEXT_SIZE})"
+    )
+    parser.add_argument("--seed", "-s",
+        type=int, default=-1, metavar="SEED",
+        help="Seed Value (Default=-1: Random Seed)"
+    )
+    parser.add_argument("--temperature", "-t",
+        type=float, default=DEFAULT_TEMPERATURE, metavar="TEMPERATURE",
+        help=f"Temperatue to Use for Sampling (Default: {DEFAULT_TEMPERATURE})"
+    )
+    return parser
+
+
+if __name__ == "__main__":
+    import json
+    model_kwargs = vars(
+        argparse.ArgumentParser(parents=[get_model_arg_paser()]).parse_args()
+    )
+    print(json.dumps(model_kwargs, ensure_ascii=False))
