@@ -3,7 +3,6 @@ import platform
 
 cmake_args = []
 if platform.system() == "Darwin" and platform.processor() == "arm":
-    print("Apple Silicon detected.")
     cmake_args += ['-DLLAMA_METAL=on']
 
 setup(

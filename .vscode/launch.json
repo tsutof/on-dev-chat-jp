@@ -3,7 +3,77 @@
     // 既存の属性の説明をホバーして表示します。
     // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
+    "inputs": [
+        {
+            "type": "promptString",
+            "id": "repo_id",
+            "description": "Hugging Face Hub リポジトリ ID",
+            "default": "mmnga/ELYZA-japanese-Llama-2-7b-instruct-gguf"
+        },
+        {
+            "type": "promptString",
+            "id": "gguf_file",
+            "description": "GGUFファイル",
+            "default": "ELYZA-japanese-Llama-2-7b-instruct-q4_K_S.gguf"
+        },
+        {
+            "type": "promptString",
+            "id": "cntx_size",
+            "description": "コンテキストサイズ",
+            "default": "2048"
+        },
+        {
+            "type": "promptString",
+            "id": "seed",
+            "description": "シード値（-1:ランダム）",
+            "default": "-1"
+        },
+        {
+            "type": "promptString",
+            "id": "temperature",
+            "description": "デコード結果サンプリングのTemperatue",
+            "default": "0.8"
+        }
+    ],
     "configurations": [
+        {
+            "name": "RAGチャットボット",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/ondevchatjp/rag_chat.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--repo_id=${input:repo_id}",
+                "--gguf_file=${input:gguf_file}",
+                "--cntx_size=${input:cntx_size}",
+                "--seed=${input:seed}",
+                "--temperature=${input:temperature}"
+            ]
+        },
+        {
+            "name": "フリートーク チャットボット",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/ondevchatjp/free_chat.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--repo_id=${input:repo_id}",
+                "--gguf_file=${input:gguf_file}",
+                "--cntx_size=${input:cntx_size}",
+                "--seed=${input:seed}",
+                "--temperature=${input:temperature}"
+            ]
+        },
+        {
+            "name": "ベクトル検索",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/ondevchatjp/vector_search.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
         {
             "name": "Python: 現在のファイル",
             "type": "python",
