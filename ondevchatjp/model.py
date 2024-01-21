@@ -74,11 +74,3 @@ def get_model_arg_paser():
         help=f"Temperatue to Use for Sampling (Default: {DEFAULT_TEMPERATURE})"
     )
     return parser
-
-
-if __name__ == "__main__":
-    import json
-    model_kwargs = vars(
-        argparse.ArgumentParser(parents=[get_model_arg_paser()]).parse_args()
-    )
-    print(json.dumps(model_kwargs, ensure_ascii=False))

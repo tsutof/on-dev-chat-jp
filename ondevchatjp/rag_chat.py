@@ -28,6 +28,9 @@ import pyopenjtalk
 from ondevchatjp import *
 
 
+PERSIST_DIRECTORY = ".chroma_db"
+
+
 model_kwargs = vars(
     argparse.ArgumentParser(parents=[get_model_arg_paser()]).parse_args()
 )
@@ -35,7 +38,7 @@ print(json.dumps(model_kwargs, ensure_ascii=False))
 
 
 with gr.Blocks() as demo:
-    db = VectorStore()
+    db = VectorStore(persist_path=PERSIST_DIRECTORY)
     retriever = db.as_retriever(search_k=2)
     transcriber = Transcriber()
     llm = get_model(**model_kwargs)

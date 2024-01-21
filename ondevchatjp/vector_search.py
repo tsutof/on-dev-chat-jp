@@ -27,7 +27,10 @@ import json
 from ondevchatjp.vector_store import *
 
 
-vector_db = VectorStore()
+PERSIST_DIRECTORY = ".chroma_db"
+
+
+vector_db = VectorStore(persist_path=PERSIST_DIRECTORY)
 
 
 # 指定したURLからベクトルデータを作成する

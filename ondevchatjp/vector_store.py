@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 
+from typing import Optional
 from langchain_community.document_loaders import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
@@ -36,7 +37,7 @@ class VectorStore:
     def __init__(self, 
             chunk_size: int=256, 
             chunk_overlap: int=64,
-            persist_path: str=".chroma_db",
+            persist_path: Optional[str] = None,
             collection: str=DEFAULT_COLLECTION,
             embedding_model: str=DEFAULT_EMBEDDING) -> None:
         self.embeddings = HuggingFaceEmbeddings(model_name=embedding_model)
