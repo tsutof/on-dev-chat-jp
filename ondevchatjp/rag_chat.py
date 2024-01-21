@@ -34,7 +34,6 @@ PERSIST_DIRECTORY = ".chroma_db"
 model_kwargs = vars(
     argparse.ArgumentParser(parents=[get_model_arg_paser()]).parse_args()
 )
-print(json.dumps(model_kwargs, ensure_ascii=False))
 
 
 with gr.Blocks() as demo:
@@ -92,6 +91,7 @@ with gr.Blocks() as demo:
     msg = gr.Textbox("", label="あなたからのテキストメッセージ", interactive=flg)
     audio_in = gr.Audio(sources=["microphone"], label="あなたからの音声メッセージ")
     audio_out = gr.Audio(type="numpy", label="AIからの音声メッセージ", autoplay=True)
+    gr.Textbox(json.dumps(model_kwargs, ensure_ascii=False), label="モデル パラメータ")
 
     # テキスト入力時のイベントハンドリング
     msg.submit(
