@@ -32,12 +32,13 @@ B_OS, E_OS = "<s>", "</s>"
 
 with gr.Blocks() as demo:
     transcriber = Transcriber()
-    llm = get_model(seed=0)
+    llm = get_model(seed=-1)
     chain = make_free_talk_chain(llm)
 
     def text2speech(history):
         text = history[-1][1]
         audio, sr = pyopenjtalk.tts(text)
+        audio = audio.astype(np.int16)
         return sr, audio
 
     def speech2text(audio, history):
@@ -72,10 +73,10 @@ with gr.Blocks() as demo:
             yield history
 
     chatbot = gr.Chatbot(label="チャット")
-    msg = gr.Textbox("", label="あなたからのメッセージ")
     clear = gr.Button("チャット履歴の消去")
-    audio_in = gr.Audio(sources=["microphone"], label="あなたからのメッセージ")
-    audio_out = gr.Audio(type="numpy", label="AIからのメッセージ", autoplay=True)
+    msg = gr.Textbox("", label="あなたからのテキストメッセージ")
+    audio_in = gr.Audio(sources=["microphone"], label="あなたからの音声メッセージ")
+    audio_out = gr.Audio(type="numpy", label="AIからの音声メッセージ", autoplay=True)
 
     # テキスト入力時のイベントハンドリング
     msg.submit(

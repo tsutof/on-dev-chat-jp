@@ -21,8 +21,9 @@
 # SOFTWARE.
 
 
-import torch
 import numpy as np
+import torch
+import torchaudio.transforms as T
 import whisper
 
 

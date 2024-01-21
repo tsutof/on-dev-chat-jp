@@ -52,6 +52,7 @@ with gr.Blocks() as demo:
     def text2speech(history):
         text = history[-1][1]
         audio, sr = pyopenjtalk.tts(text)
+        audio = audio.astype(np.int16)
         return sr, audio
 
     def speech2text(audio, history):
@@ -71,11 +72,11 @@ with gr.Blocks() as demo:
             history[-1][1] += s
             yield history
 
-    chatbot = gr.Chatbot(label="チャット")
-    clear = gr.Button("チャット履歴の消去")
     with gr.Row():
         url = gr.Textbox(value="", label="情報ソースURL", scale=5)
         rst_btn = gr.Button(value="ベクトル情報をリセット")
+    chatbot = gr.Chatbot(label="チャット")
+    # clear = gr.Button("チャット履歴の消去")
     flg = True if db.get_num_docs() > 0 else False
     msg = gr.Textbox("", label="あなたからのテキストメッセージ", interactive=flg)
     audio_in = gr.Audio(sources=["microphone"], label="あなたからの音声メッセージ")
@@ -100,7 +101,7 @@ with gr.Blocks() as demo:
     )
 
     # チャット履歴の消去
-    clear.click(lambda: None, None, chatbot, queue=False)
+    # clear.click(lambda: None, None, chatbot, queue=False)
 
     # ベクトル情報をリセット
     rst_btn.click(fn=reset_db, inputs=None, outputs=msg)
