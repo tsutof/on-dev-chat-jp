@@ -3,7 +3,13 @@ Llama.cppベースのオンデバイス・チャットボット
 
 詳細は以下の技術記事で紹介しています。
 
-https://zenn.dev/tsutof/articles/177b3bd82b05e8
+- [Mac上で動作するオンデバイスのチャットアプリをGradioでサクッと作ってみる](https://zenn.dev/tsutof/articles/177b3bd82b05e8)
+
+- [llama.cppのテキスト生成パラメータを調整してみる](https://zenn.dev/tsutof/articles/5de9b0e812f0c8)
+
+- [Mac上でLangChainとChromaデータベースを使ったベクトル検索を試す](https://zenn.dev/tsutof/articles/abe58215c2c347)
+
+- [RAGを利用したチャットアプリ](https://zenn.dev/tsutof/articles/a30d0bf7f89bb8)
 
 ## インストール
 
