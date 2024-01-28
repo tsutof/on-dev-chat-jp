@@ -31,12 +31,8 @@ from ondevchatjp import *
 PERSIST_DIRECTORY = ".chroma_db"
 
 
-model_kwargs = vars(
-    argparse.ArgumentParser(parents=[get_model_arg_paser()]).parse_args()
-)
-
-
 with gr.Blocks() as demo:
+    args, model_kwargs = parse_args()
     db = VectorStore(persist_path=PERSIST_DIRECTORY)
     retriever = db.as_retriever(search_k=2)
     transcriber = Transcriber()
@@ -120,4 +116,4 @@ with gr.Blocks() as demo:
     # 情報ソースURLの入力
     url.submit(add_documnet, url, msg, queue=False)
 
-demo.queue().launch(inbrowser=True)
+demo.queue().launch(inbrowser=args.inbrowser, share=args.share)

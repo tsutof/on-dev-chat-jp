@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 
+import argparse
 import gradio as gr
 import pandas as pd
 import json
@@ -69,6 +70,15 @@ def reset_db():
 
 
 with gr.Blocks() as demo:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--inbrowser", action="store_true", default=False,
+        help="Launch the interface in a new tab on the default browser"
+    )
+    parser.add_argument("--share", action="store_true", default=False,
+        help="Create a publicly shareable link for the interface"
+    )
+    args = parser.parse_args()
+
     ndocs = vector_db.get_num_docs()
 
     with gr.Row():
@@ -111,4 +121,4 @@ with gr.Blocks() as demo:
     rst_btn.click(fn=reset_db, inputs=None, outputs=[query, query_btn])
 
 
-demo.queue().launch(inbrowser=True)
+demo.queue().launch(inbrowser=args.inbrowser, share=args.share)

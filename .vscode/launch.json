@@ -48,7 +48,8 @@
                 "--gguf_file=${input:gguf_file}",
                 "--cntx_size=${input:cntx_size}",
                 "--seed=${input:seed}",
-                "--temperature=${input:temperature}"
+                "--temperature=${input:temperature}",
+                "--inbrowser"
             ]
         },
         {
@@ -63,7 +64,8 @@
                 "--gguf_file=${input:gguf_file}",
                 "--cntx_size=${input:cntx_size}",
                 "--seed=${input:seed}",
-                "--temperature=${input:temperature}"
+                "--temperature=${input:temperature}",
+                "--inbrowser"
             ]
         },
         {
@@ -72,7 +74,10 @@
             "request": "launch",
             "program": "${workspaceFolder}/ondevchatjp/vector_search.py",
             "console": "integratedTerminal",
-            "justMyCode": true
+            "justMyCode": true,
+            "args": [
+                "--inbrowser"
+            ]
         },
         {
             "name": "Python: 現在のファイル",

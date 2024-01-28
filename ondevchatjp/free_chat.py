@@ -32,12 +32,8 @@ B_INST, E_INST = "[INST]", "[/INST]"
 B_OS, E_OS = "<s>", "</s>"
 
 
-model_kwargs = vars(
-    argparse.ArgumentParser(parents=[get_model_arg_paser()]).parse_args()
-)
-
-
 with gr.Blocks() as demo:
+    args, model_kwargs = parse_args()
     transcriber = Transcriber()
     llm = get_model(**model_kwargs)
     chain = make_free_talk_chain(llm)
@@ -79,6 +75,9 @@ with gr.Blocks() as demo:
             history[-1][1] += s
             yield history
 
+    def switch_autoplay(flag):
+        return gr.update(autoplay=flag)
+
     chatbot = gr.Chatbot(label="チャット")
     clear = gr.Button("チャット履歴の消去")
     msg = gr.Textbox("", label="あなたからのテキストメッセージ")
@@ -107,4 +106,5 @@ with gr.Blocks() as demo:
     # チャット履歴の消去
     clear.click(lambda: None, None, chatbot, queue=False)
 
-demo.queue().launch(inbrowser=True)
+
+demo.queue().launch(inbrowser=args.inbrowser, share=args.share)
