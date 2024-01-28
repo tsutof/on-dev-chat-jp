@@ -47,13 +47,20 @@ with gr.Blocks() as demo:
             gr.Info("ベクトル情報が既に存在します")
         else:
             gr.Info(f"ベクトル情報の作成を完了しました{str(n)}")
-        return gr.update(interactive=True, value="")
+        return (
+            gr.update(visible=True, value=""),
+            gr.update(visible=True)
+        )
 
     def reset_db():
         global db
         db.delete_all()
         gr.Info("すべてのベクトル情報を削除しました")
-        gr.update(interactive=False, value="")
+        return (
+            gr.update(visible=False, value=""),
+            gr.update(visible=False),
+            ""
+        )
 
     def text2speech(history):
         text = history[-1][1]
@@ -78,42 +85,48 @@ with gr.Blocks() as demo:
             history[-1][1] += s
             yield history
 
-    with gr.Row():
-        url = gr.Textbox(value="", label="情報ソースURL", scale=5)
-        rst_btn = gr.Button(value="ベクトル情報をリセット")
+    
+    url = gr.Textbox(
+        value="", label="情報ソースURL",
+        placeholder="情報ソースとなるウェブページのURLを入力後、リターンキーを押す"
+    )
+    rst_btn = gr.Button(value="ベクトル情報をリセット（削除）")
     chatbot = gr.Chatbot(label="チャット")
-    # clear = gr.Button("チャット履歴の消去")
     flg = True if db.get_num_docs() > 0 else False
-    msg = gr.Textbox("", label="あなたからのテキストメッセージ", interactive=flg)
-    audio_in = gr.Audio(sources=["microphone"], label="あなたからの音声メッセージ")
-    audio_out = gr.Audio(type="numpy", label="AIからの音声メッセージ", autoplay=True)
+    msg = gr.Textbox(
+        "", label="あなたからのテキストメッセージ", visible=flg,
+        placeholder="質問を入力後、リターンキーを押す"
+    )
+    audio_in = gr.Audio(
+        sources=["microphone"], label="あなたからの音声メッセージ", visible=flg
+    )
+    audio_out = gr.Audio(
+        type="numpy", label="AIからの音声メッセージ", autoplay=True
+    )
     gr.Textbox(json.dumps(model_kwargs, ensure_ascii=False), label="モデル パラメータ")
 
     # テキスト入力時のイベントハンドリング
     msg.submit(
-        user, [msg, chatbot], [msg, chatbot], queue=False
+        user, [msg, chatbot], [msg, chatbot], queue=True
     ).then(
-        bot, chatbot, chatbot
+        bot, chatbot, chatbot,
     ).then(
-        text2speech, chatbot, audio_out
+        text2speech, chatbot, audio_out,
     )
 
     # 音声入力時のイベントハンドリング
     audio_in.stop_recording(
-        speech2text, [audio_in, chatbot], chatbot, queue=False
+        speech2text, [audio_in, chatbot], chatbot, queue=True
     ).then(
         bot, chatbot, chatbot
     ).then(
         text2speech, chatbot, audio_out
     )
 
-    # チャット履歴の消去
-    # clear.click(lambda: None, None, chatbot, queue=False)
-
     # ベクトル情報をリセット
-    rst_btn.click(fn=reset_db, inputs=None, outputs=msg)
+    rst_btn.click(reset_db, None, [msg, audio_in, url], queue=True)
 
     # 情報ソースURLの入力
-    url.submit(add_documnet, url, msg, queue=False)
+    url.submit(add_documnet, url, [msg, audio_in], queue=True)
 
 demo.queue().launch(inbrowser=args.inbrowser, share=args.share)

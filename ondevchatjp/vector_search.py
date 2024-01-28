@@ -41,12 +41,15 @@ def add_document(url):
     sources = vector_db.get_metadata_values("source")
     if url in sources:
         gr.Info("ベクトル情報が既に存在します")
-        return (gr.update(interactive=True, value=""), gr.update(interactive=True))
+        return (gr.update(visible=True, value=""), gr.update(visible=True))
 
     gr.Info("ベクトル情報を作成しています")
     vector_db.add_web_document(url)
     gr.Info(f"ベクトル情報の作成を完了しました。{str(vector_db.get_num_docs())}")
-    return (gr.update(interactive=True, value=""), gr.update(interactive=True))
+    return (
+        gr.update(visible=True, value=""), 
+        gr.update(visible=True)
+    )
 
 
 # queryで指定した文章と高い類似度を持つ上位k個の結果を返す
@@ -66,7 +69,10 @@ def vector_search(query, k):
 # Chromaデータベースからコレクションを削除する
 def reset_db():
     vector_db.delete_all()
-    return (gr.update(interactive=False, value=""), gr.update(interactive=False))
+    return (
+        gr.update(visible=False, value=""), 
+        gr.update(visible=False)
+    )
 
 
 with gr.Blocks() as demo:
@@ -82,12 +88,18 @@ with gr.Blocks() as demo:
     ndocs = vector_db.get_num_docs()
 
     with gr.Row():
-        url = gr.Textbox(value="", label="情報ソースURL", scale=5)
+        url = gr.Textbox(
+            value="", label="情報ソースURL", scale=5,
+            placeholder="情報ソースとなるウェブページのURLを入力後、リターンキーを押す、または、「ベクトル化」ボタンをクリック"
+        )
         vect_btn = gr.Button(value="ベクトル化")
     with gr.Row():
         flg = True if ndocs > 0 else False
-        query = gr.Textbox(value="", label="質問", interactive=flg, scale=5)
-        query_btn = gr.Button(value="検索", interactive=flg)
+        query = gr.Textbox(
+            value="", label="質問", visible=flg, scale=5,
+            placeholder="質問を入力後、リターンキーを押す、または、「検索」ボタンをクリック"
+        )
+        query_btn = gr.Button(value="検索", visible=flg)
     with gr.Row():
         rst_btn = gr.Button(value="ベクトル情報をリセット")
         k_val = gr.Number(value=4, label="抽出数", minimum=1, maximum=100)
@@ -105,7 +117,8 @@ with gr.Blocks() as demo:
         triggers=[url.submit, vect_btn.click],
         fn=add_document,
         inputs=url,
-        outputs=[query, query_btn]
+        outputs=[query, query_btn],
+        queue=True
     )
 
     # 「質問」テキストフィールドでリターンキーを押した時および
@@ -114,11 +127,17 @@ with gr.Blocks() as demo:
         triggers=[query.submit, query_btn.click],
         fn=vector_search,
         inputs=[query, k_val],
-        outputs=results
+        outputs=results,
+        queue=True
     )
 
     # 「ベクトル情報をリセット」ボタンをクリックした時にイベントハンドリング
-    rst_btn.click(fn=reset_db, inputs=None, outputs=[query, query_btn])
+    rst_btn.click(
+        fn=reset_db, 
+        inputs=None, 
+        outputs=[query, query_btn], 
+        queue=True
+    )
 
 
 demo.queue().launch(inbrowser=args.inbrowser, share=args.share)

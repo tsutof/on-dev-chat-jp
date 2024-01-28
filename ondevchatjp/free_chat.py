@@ -80,14 +80,17 @@ with gr.Blocks() as demo:
 
     chatbot = gr.Chatbot(label="チャット")
     clear = gr.Button("チャット履歴の消去")
-    msg = gr.Textbox("", label="あなたからのテキストメッセージ")
+    msg = gr.Textbox(
+        "", label="あなたからのテキストメッセージ",
+        placeholder="メッセージを入力後、リターンキーを押す"
+    )
     audio_in = gr.Audio(sources=["microphone"], label="あなたからの音声メッセージ")
     audio_out = gr.Audio(type="numpy", label="AIからの音声メッセージ", autoplay=True)
     gr.Textbox(json.dumps(model_kwargs, ensure_ascii=False), label="モデル パラメータ")
 
     # テキスト入力時のイベントハンドリング
     msg.submit(
-        user, [msg, chatbot], [msg, chatbot], queue=False
+        user, [msg, chatbot], [msg, chatbot], queue=True
     ).then(
         bot, chatbot, chatbot
     ).then(
@@ -96,7 +99,7 @@ with gr.Blocks() as demo:
 
     # 音声入力時のイベントハンドリング
     audio_in.stop_recording(
-        speech2text, [audio_in, chatbot], chatbot, queue=False
+        speech2text, [audio_in, chatbot], chatbot, queue=True
     ).then(
         bot, chatbot, chatbot
     ).then(
