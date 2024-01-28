@@ -99,14 +99,15 @@ conda activate ondevchatjp
 
 ### 簡単なRAGを使ったチャットボット
 
-![rag_chat.py スクリーンショット](images/rag_chat.png)
-
 以下のコマンドで、[Hugging Face Hub](https://huggingface.co)で公開されている[mmnga/ELYZA-japanese-Llama-2-7b-instruct-gguf/
 ELYZA-japanese-Llama-2-7b-instruct-q4_K_S.gguf](https://huggingface.co/mmnga/ELYZA-japanese-Llama-2-7b-instruct-gguf/blob/main/ELYZA-japanese-Llama-2-7b-instruct-q4_K_S.gguf)モデルを利用したRAGチャットボットが起動します。RAGの情報ソースは、ユーザーが指定するウェブページです。
 
 ```
 python -m ondevchatjp.rag_chat --inbrowser
 ```
+
+![rag_chat.py スクリーンショット](images/rag_chat.png)
+
 実行方法の詳細は、「[オンデバイス（ローカル）LLMとLangChainを利用したRAGチャットアプリの作り方](https://zenn.dev/tsutof/articles/a30d0bf7f89bb8)」を参照してください。
 
 詳細なコマンドライン・オプションは以下のとおりです。
@@ -136,14 +137,14 @@ options:
 
 ### フリートーク形式のチャットボット
 
-![free_chat.py スクリーンショット](images/free_chat.png)
-
 以下のコマンドで、[Hugging Face Hub](https://huggingface.co)で公開されている[mmnga/ELYZA-japanese-Llama-2-7b-instruct-gguf/
 ELYZA-japanese-Llama-2-7b-instruct-q4_K_S.gguf](https://huggingface.co/mmnga/ELYZA-japanese-Llama-2-7b-instruct-gguf/blob/main/ELYZA-japanese-Llama-2-7b-instruct-q4_K_S.gguf)モデルを利用したフリートーク形式のチャットボットが起動します。
 
 ```
 python -m ondevchatjp.free_chat --inbrowser
 ```
+
+![free_chat.py スクリーンショット](images/free_chat.png)
 
 実行方法の詳細は、「[Mac上で動作するオンデバイスのチャットアプリをGradioでサクッと作ってみる](https://zenn.dev/tsutof/articles/177b3bd82b05e8)」を参照してください。
 
@@ -174,13 +175,13 @@ options:
 
 ### ベクトル検索
 
-![vector_search.py スクリーンショット](images/vector_search.png)
-
 以下のコマンドで、ベクトルデータベースを利用したベクトル検索アプリケーションが起動します。情報ソースはユーザーが指定するウェブページです。
 
 ```
 python -m ondevchatjp.vector_search --inbrowser
 ```
+
+![vector_search.py スクリーンショット](images/vector_search.png)
 
 実行方法の詳細は、「[Mac上でLangChainとChromaデータベースを使ったベクトル検索を試す](https://zenn.dev/tsutof/articles/abe58215c2c347)」を参照してください。
 
