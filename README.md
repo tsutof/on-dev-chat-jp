@@ -13,6 +13,10 @@ Llama.cppベースのオンデバイス・チャットボット
 
 ## インストール
 
+### Google Colaboratory
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/tsutof/on-dev-chat-jp/blob/main/notebooks/ondevchatjp.ipynb)
+
 ### MacOS
 
 1. FFmpegとPortAudioをbrewでインストール
@@ -38,7 +42,7 @@ Llama.cppベースのオンデバイス・チャットボット
     && pip install -e .
     ```
 
-### Linux (Ubuntu) OpenBLAS
+### Linux (Ubuntu) OpenBLAS利用の場合
 
 1. OpenBLAS、FFmpeg、PortAudioをaptでインストール
     ```
@@ -64,7 +68,7 @@ Llama.cppベースのオンデバイス・チャットボット
     && pip install -e .
     ```
 
-### Linux (Ubuntu) cuBLAS
+### Linux (Ubuntu) cuBLAS利用の場合（NVIDIA GPUカードありの環境）
 
 1. FFmpeg、PortAudioをaptでインストール
     ```
