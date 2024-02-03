@@ -139,23 +139,23 @@ options:
   --share               Create a publicly shareable link for the interface
 ```
 
-### フリートーク形式のチャットボット
+### シンプルなチャットボット
 
 以下のコマンドで、[Hugging Face Hub](https://huggingface.co)で公開されている[mmnga/ELYZA-japanese-Llama-2-7b-instruct-gguf/
 ELYZA-japanese-Llama-2-7b-instruct-q4_K_S.gguf](https://huggingface.co/mmnga/ELYZA-japanese-Llama-2-7b-instruct-gguf/blob/main/ELYZA-japanese-Llama-2-7b-instruct-q4_K_S.gguf)モデルを利用したフリートーク形式のチャットボットが起動します。
 
 ```
-python -m ondevchatjp.free_chat --inbrowser
+python -m ondevchatjp.simple_chat --inbrowser
 ```
 
-![free_chat.py スクリーンショット](images/free_chat.png)
+![simple_chat.py スクリーンショット](images/simple_chat.png)
 
 実行方法の詳細は、「[Mac上で動作するオンデバイスのチャットアプリをGradioでサクッと作ってみる](https://zenn.dev/tsutof/articles/177b3bd82b05e8)」を参照してください。
 
 詳細なコマンドライン・オプションは以下のとおりです。
 
 ```
-usage: free_chat.py [-h] [--repo_id LLM_REPO] [--gguf_file LLM_FILE] [--model_path PATH]
+usage: simple_chat.py [-h] [--repo_id LLM_REPO] [--gguf_file LLM_FILE] [--model_path PATH]
                     [--cntx_size CNTX_SIZE] [--seed SEED] [--temperature TEMPERATURE] [--inbrowser]
                     [--share]
 
