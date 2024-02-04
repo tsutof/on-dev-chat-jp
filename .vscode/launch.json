@@ -53,10 +53,10 @@
             ]
         },
         {
-            "name": "フリートーク チャットボット",
+            "name": "シンプルなチャットボット",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/ondevchatjp/free_chat.py",
+            "program": "${workspaceFolder}/ondevchatjp/simple_chat.py",
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
