@@ -25,7 +25,7 @@ from typing import Optional
 from langchain_community.document_loaders import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 
 
 DEFAULT_EMBEDDING = "sentence-transformers/distiluse-base-multilingual-cased-v2"

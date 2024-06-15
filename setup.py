@@ -15,6 +15,7 @@ setup(
         'langsmith',
         'langchain',
         'langchain-community',
+        'langchain-huggingface',
         'chromadb',
         'bs4',
         'sentence_transformers',
