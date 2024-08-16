@@ -32,7 +32,7 @@ Llama.cppベースのオンデバイス・チャットボット
 
 1. [llama-cpp-python](https://github.com/abetlen/llama-cpp-python)パッケージをインストール。MacOSの場合、Metalによる高速化が有効になるよう設定する。
     ```
-    CMAKE_ARGS="-DLLAMA_METAL=on" pip install llama-cpp-python
+    CMAKE_ARGS="-DGGML_METAL=on" pip install llama-cpp-python
     ```
 
 1. 本リポジトリをクローンして、インストール
@@ -58,7 +58,7 @@ Llama.cppベースのオンデバイス・チャットボット
 
 1. [llama-cpp-python](https://github.com/abetlen/llama-cpp-python)パッケージをインストール。OpenBLASによる高速化が有効になるよう設定する
     ```
-    CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" pip install llama-cpp-python
+    CMAKE_ARGS="-DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS" pip install llama-cpp-python
     ```
 
 1. 本リポジトリをクローンして、インストール
@@ -68,7 +68,7 @@ Llama.cppベースのオンデバイス・チャットボット
     && pip install -e .
     ```
 
-### Linux (Ubuntu) cuBLAS利用の場合（NVIDIA GPUカードありの環境）
+### Linux (Ubuntu) CUDA利用の場合（NVIDIA GPUカードありの環境）
 
 1. FFmpeg、PortAudioをaptでインストール
     ```
@@ -84,7 +84,7 @@ Llama.cppベースのオンデバイス・チャットボット
 
 1. [llama-cpp-python](https://github.com/abetlen/llama-cpp-python)パッケージをインストール。cuBLASによる高速化が有効になるよう設定する
     ```
-    CMAKE_ARGS="-DLLAMA_CUBLAS=on" pip install llama-cpp-python
+    CMAKE_ARGS="-DGGML_CUDA=on" pip install llama-cpp-python
     ```
 
 1. 本リポジトリをクローンして、インストール
@@ -109,6 +109,8 @@ ELYZA-japanese-Llama-2-7b-instruct-q4_K_S.gguf](https://huggingface.co/mmnga/ELY
 ```
 python -m ondevchatjp.rag_chat --inbrowser
 ```
+
+**macOS上のSafariブラウザでGradioの音声出力が動作しないことがあります。その場合は、Chromeブラウザをご使用ください。**
 
 ![rag_chat.py スクリーンショット](images/rag_chat.png)
 
@@ -147,6 +149,8 @@ ELYZA-japanese-Llama-2-7b-instruct-q4_K_S.gguf](https://huggingface.co/mmnga/ELY
 ```
 python -m ondevchatjp.simple_chat --inbrowser
 ```
+
+**macOS上のSafariブラウザでGradioの音声出力が動作しないことがあります。その場合は、Chromeブラウザをご使用ください。**
 
 ![simple_chat.py スクリーンショット](images/simple_chat.png)
 
